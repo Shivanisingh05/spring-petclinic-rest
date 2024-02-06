@@ -1,0 +1,105 @@
+{
+	"info": {
+		"_postman_id": "3e6f666a-04ca-4f37-8342-5c2bfd979825",
+		"name": "PetClinic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post_Specialities",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"radiology\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9966/petclinic/api/specialties",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9966",
+					"path": [
+						"petclinic",
+						"api",
+						"specialties"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get_Specialities",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9966/petclinic/api/specialties/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9966",
+					"path": [
+						"petclinic",
+						"api",
+						"specialties",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put_Specialties",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Animal welfare\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9966/petclinic/api/specialties/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9966",
+					"path": [
+						"petclinic",
+						"api",
+						"specialties",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

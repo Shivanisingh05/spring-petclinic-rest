@@ -1,0 +1,270 @@
+openapi: 3.0.1
+info:
+  title: PetClinic
+  version: '1'
+paths:
+  /petclinic/api/specialties:
+    post:
+      summary: Post_Specialities
+      parameters:
+        - name: accept
+          in: header
+          required: true
+          schema:
+            type: string
+          examples:
+            POST_DETAILS:
+              value: application/json
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+          examples:
+            POST_DETAILS:
+              value: application/json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Specialties_RequestBody'
+            examples:
+              POST_DETAILS:
+                value:
+                  name: Cardiology
+      responses:
+        '201':
+          description: Post_Specialities
+          headers:
+            Location:
+              required: true
+              schema:
+                type: string
+            X-Content-Type-Options:
+              required: true
+              schema:
+                type: string
+            X-XSS-Protection:
+              required: true
+              schema:
+                type: number
+            Cache-Control:
+              required: true
+              schema:
+                type: string
+            Pragma:
+              required: true
+              schema:
+                type: string
+            Expires:
+              required: true
+              schema:
+                type: number
+            X-Frame-Options:
+              required: true
+              schema:
+                type: string
+            Transfer-Encoding:
+              required: true
+              schema:
+                type: string
+            Date:
+              required: true
+              schema:
+                type: string
+            Keep-Alive:
+              required: true
+              schema:
+                type: string
+            Connection:
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Specialties_ResponseBody'
+              examples:
+                POST_DETAILS:
+                  value:
+                    id: 1
+                    name: Cardiology
+  /petclinic/api/specialties/{id}:
+    parameters:
+      - schema:
+          type: number
+        name: id
+        in: path
+        required: true
+        examples:
+          GET_DETAILS_1:
+            value: 1
+          GET_DETAILS_2:
+            value: 1
+          PUT_DETAILS:
+            value: 2
+      - schema:
+          type: string
+        name: accept
+        in: header
+        required: true
+        examples:
+          GET_DETAILS_1:
+            value: application/json
+          GET_DETAILS_2:
+            value: application/json
+          PUT_DETAILS:
+            value: application/json
+    get:
+      summary: Get_Specialities
+      responses:
+        '200':
+          description: Get_Specialities
+          headers:
+            X-Content-Type-Options:
+              required: true
+              schema:
+                type: string
+            X-XSS-Protection:
+              required: true
+              schema:
+                type: number
+            Cache-Control:
+              required: true
+              schema:
+                type: string
+            Pragma:
+              required: true
+              schema:
+                type: string
+            Expires:
+              required: true
+              schema:
+                type: number
+            X-Frame-Options:
+              required: true
+              schema:
+                type: string
+            Transfer-Encoding:
+              required: true
+              schema:
+                type: string
+            Date:
+              required: true
+              schema:
+                type: string
+            Keep-Alive:
+              required: true
+              schema:
+                type: string
+            Connection:
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/1_ResponseBody'
+              examples:
+                GET_DETAILS_1:
+                  value:
+                    id: 1
+                    name: Cardiology
+                GET_DETAILS_2:
+                  value:
+                    id: 3
+                    name: dentistry
+    put:
+      summary: Put_Specialties
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/1_RequestBody'
+            examples:
+              PUT_DETAILS:
+                value:
+                  name: Neurology
+      responses:
+        '204':
+          description: Put_Specialties
+          headers:
+            X-Content-Type-Options:
+              required: true
+              schema:
+                type: string
+            X-XSS-Protection:
+              required: true
+              schema:
+                type: number
+            Cache-Control:
+              required: true
+              schema:
+                type: string
+            Pragma:
+              required: true
+              schema:
+                type: string
+            Expires:
+              required: true
+              schema:
+                type: number
+            X-Frame-Options:
+              required: true
+              schema:
+                type: string
+            Date:
+              required: true
+              schema:
+                type: string
+            Keep-Alive:
+              required: true
+              schema:
+                type: string
+            Connection:
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/2_RequestBody'
+              examples:
+                PUT_DETAILS:
+                  value: ''
+
+components:
+  schemas:
+    Specialties_RequestBody:
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    Specialties_ResponseBody:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+    1_ResponseBody:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+    1_RequestBody:
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    2_RequestBody:
+      type: object
+      nullable: true

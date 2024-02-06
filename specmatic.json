@@ -1,0 +1,10 @@
+{
+  "sources": [
+    {
+      "provider": "git",
+      "test": [
+        "PetClinic.postman_collection-localhost-9966.yaml"
+      ]
+    }
+  ]
+}
