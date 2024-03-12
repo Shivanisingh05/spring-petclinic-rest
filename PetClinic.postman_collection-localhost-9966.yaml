@@ -89,6 +89,49 @@ paths:
                   value:
                     id: 1
                     name: Cardiology
+        '400':
+          description: Post_Specialties_Bad_Request
+          headers:
+            errors:
+              required: true
+              schema:
+                type: array
+                items:
+                  oneOf:
+                  - $ref: '#/components/schemas/EmptyErrors'
+                  - $ref: '#/components/schemas/Errors'
+            X-Content-Type-Options:
+              required: true
+              schema:
+                type: string
+            X-XSS-Protection:
+              required: true
+              schema:
+                type: number
+            Cache-Control:
+              required: true
+              schema:
+                type: string
+            Pragma:
+              required: true
+              schema:
+                type: string
+            Expires:
+              required: true
+              schema:
+                type: number
+            X-Frame-Options:
+              required: true
+              schema:
+                type: string
+            Date:
+              required: true
+              schema:
+                type: string
+            Connection:
+              required: true
+              schema:
+                type: string
   /petclinic/api/specialties/{id}:
     parameters:
       - schema:
@@ -232,6 +275,47 @@ paths:
               examples:
                 PUT_DETAILS:
                   value: ''
+        '400':
+          description: Put_Specialties_Bad_Request
+          headers:
+            errors:
+              required: true
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmptyErrors'
+            X-Content-Type-Options:
+              required: true
+              schema:
+                type: string
+            X-XSS-Protection:
+              required: true
+              schema:
+                type: number
+            Cache-Control:
+              required: true
+              schema:
+                type: string
+            Pragma:
+              required: true
+              schema:
+                type: string
+            Expires:
+              required: true
+              schema:
+                type: number
+            X-Frame-Options:
+              required: true
+              schema:
+                type: string
+            Date:
+              required: true
+              schema:
+                type: string
+            Connection:
+              required: true
+              schema:
+                type: string
 
 components:
   schemas:
@@ -268,3 +352,33 @@ components:
     2_RequestBody:
       type: object
       nullable: true
+    EmptyErrors:
+      required:
+        - errorMessage
+        - fieldName
+        - fieldValue
+        - objectName
+      properties:
+        objectName:
+          type: string
+        fieldName:
+          type: string
+        fieldValue:
+          type: string
+        errorMessage:
+          type: string
+      Errors:
+        required:
+          - error
+          - path
+          - status
+          - timestamp
+        properties:
+          timestamp:
+            type: string
+          status:
+            type: number
+          error:
+            type: string
+          path:
+            type: string

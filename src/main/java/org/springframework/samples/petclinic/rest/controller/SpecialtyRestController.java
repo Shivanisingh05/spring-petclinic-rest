@@ -16,11 +16,14 @@
 
 package org.springframework.samples.petclinic.rest.controller;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.samples.petclinic.mapper.SpecialtyMapper;
 import org.springframework.samples.petclinic.model.Specialty;
+import org.springframework.samples.petclinic.model.StrictStringDeserializer;
 import org.springframework.samples.petclinic.rest.api.SpecialtiesApi;
 import org.springframework.samples.petclinic.rest.dto.SpecialtyDto;
 import org.springframework.samples.petclinic.service.ClinicService;
@@ -29,6 +32,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import jakarta.transaction.Transactional;
+
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +44,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(exposedHeaders = "errors, content-type")
 @RequestMapping("api")
+@JsonDeserialize(using = StrictStringDeserializer.class)
 public class SpecialtyRestController implements SpecialtiesApi {
 
     private final ClinicService clinicService;
@@ -52,6 +58,7 @@ public class SpecialtyRestController implements SpecialtiesApi {
 
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
     @Override
+    @JsonDeserialize(using = StrictStringDeserializer.class)
     public ResponseEntity<List<SpecialtyDto>> listSpecialties() {
         List<SpecialtyDto> specialties = new ArrayList<>();
         specialties.addAll(specialtyMapper.toSpecialtyDtos(this.clinicService.findAllSpecialties()));
@@ -63,6 +70,7 @@ public class SpecialtyRestController implements SpecialtiesApi {
 
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
     @Override
+    @JsonDeserialize(using = StrictStringDeserializer.class)
     public ResponseEntity<SpecialtyDto> getSpecialty(Integer specialtyId) {
         Specialty specialty = this.clinicService.findSpecialtyById(specialtyId);
         if (specialty == null) {
@@ -73,8 +81,20 @@ public class SpecialtyRestController implements SpecialtiesApi {
 
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
     @Override
-    public ResponseEntity<SpecialtyDto> addSpecialty(SpecialtyDto specialtyDto) {
+    @JsonDeserialize(using = StrictStringDeserializer.class)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<SpecialtyDto>addSpecialty(@RequestBody @Valid  SpecialtyDto specialtyDto) {
         HttpHeaders headers = new HttpHeaders();
+        String name = specialtyDto.getName();
+        // Additional validation to ensure 'name' contains only letters
+
+        if (!name.matches("[a-zA-Z].*")) {
+            // Handle the validation error, for example, throw an exception or return a specific response.
+
+            return new ResponseEntity<>(specialtyDto, HttpStatus.BAD_REQUEST);
+        }
+
         Specialty specialty = specialtyMapper.toSpecialty(specialtyDto);
         this.clinicService.saveSpecialty(specialty);
         headers.setLocation(UriComponentsBuilder.newInstance().path("/api/specialties/{id}").buildAndExpand(specialty.getId()).toUri());
@@ -83,6 +103,7 @@ public class SpecialtyRestController implements SpecialtiesApi {
 
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
     @Override
+    @JsonDeserialize(using = StrictStringDeserializer.class)
     public ResponseEntity<SpecialtyDto> updateSpecialty(Integer specialtyId, SpecialtyDto specialtyDto) {
         Specialty currentSpecialty = this.clinicService.findSpecialtyById(specialtyId);
         if (currentSpecialty == null) {
